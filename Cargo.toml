@@ -1,0 +1,29 @@
+[package]
+name = "ogp"
+version = "0.1.0"
+edition = "2021"
+readme = "README.md"
+license-file = "LICENSE"
+authors = ["Nelson Dominguez <ekkolon@proton.me>"]
+repository = "https://github.com/ekkolon/ogp/"
+documentation = "https://docs.rs/ogp"
+homepage = "https://github.com/ekkolon/ogp#readme"
+categories = ["data-structures", "encoding"]
+keywords = [
+    "seo",
+    "structured-data",
+    "open-graph-protocol",
+    "social-media",
+    "rich-snippets",
+]
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1.0.193", features = ["derive"] }
+thiserror = "1.0.50"
+url = "2.5.0"
+
+[dev-dependencies]
+anyhow = "1.0.75"
