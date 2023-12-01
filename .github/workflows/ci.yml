@@ -14,9 +14,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
       with:
-        fetch-depth: 0
-    
+        toolchain: nightly
+        override: true
+
     - name: Build
       run: cargo build --verbose
 
