@@ -56,7 +56,8 @@
 #![allow(dead_code)]
 
 /// A constant array containing the allowed image file extensions.
-pub const ALLOWED_MEDIA_FILE_EXT: [&str; 5] = ["png", "jpg", "jpeg", "gif", "webp"];
+pub const ALLOWED_MEDIA_FILE_EXT: [&str; 5] =
+    ["png", "jpg", "jpeg", "gif", "webp"];
 
 /// Checks if a given filename has a valid image extension based on a predefined set of allowed extensions.
 ///
