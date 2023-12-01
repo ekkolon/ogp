@@ -17,6 +17,8 @@ keywords = [
     "rich-snippets",
 ]
 
+[badges]
+codecov = { repository = "ekkolon/ogp", branch = "main", service = "github" }
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
