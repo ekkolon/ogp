@@ -22,25 +22,20 @@ jobs:
 
     - name: Run tests
       run: cargo test --verbose
+      env:
+        CARGO_INCREMENTAL: '0'
+        RUSTFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests'
+        RUSTDOCFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests'
 
-    - name: Install code coverage dependencies
-      run: |
-        sudo apt update &&
-        sudo apt install -y libcurl4-openssl-dev libelf-dev libdw-dev cmake gcc binutils-dev libiberty-dev
-
-    - name: Generate code coverage
-      run: |
-        wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz
-        tar xzf master.tar.gz
-        cd kcov-master
-        mkdir build
-        cd build && cmake .. && make && make install DESTDIR=../../kcov-build
-        cd ../..
-        rm -rf kcov-master
-        for file in target/debug/ogp-*; do [ -x "${file}" ] || continue; mkdir -p "target/cov/$(basename $file)"; ./kcov-build/usr/local/bin/kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done
-        bash <(curl -s https://codecov.io/bash)
+    - name: rust-grcov
+      # You may pin to the exact commit or the version.
+      # uses: actions-rs/grcov@bb47b1ed7883a1502fa6875d562727ace2511248
+      uses: actions-rs/grcov@v0.1
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      with:
+        verbose: true
+        fail_ci_if_error: true
