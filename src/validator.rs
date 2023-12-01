@@ -5,7 +5,8 @@
 //! # Examples
 //!
 //! ```rust
-//! use crate::validator::{Validator, DimensionsValidator, SecureURLValidator};
+//! use ogp::validator::{Validator, DimensionsValidator, SecureURLValidator};
+//! use ogp::Result;
 //!
 //! struct MyData {
 //!     // ... fields for your data
@@ -22,19 +23,19 @@
 //! impl DimensionsValidator for MyData {
 //!     fn width(&self) -> Option<u32> {
 //!         // Return the width of your data
-//!         // ...
+//!         Some(300)
 //!     }
 //!
 //!     fn height(&self) -> Option<u32> {
 //!         // Return the height of your data
-//!         // ...
+//!         Some(300)
 //!     }
 //! }
 //!
 //! impl SecureURLValidator for MyData {
 //!     fn secure_url(&self) -> Option<url::Url> {
 //!         // Return the secure URL of your data
-//!         // ...
+//!         None
 //!     }
 //! }
 //! ```
@@ -60,7 +61,7 @@
 //! # Usage
 //!
 //! ```rust
-//! use crate::validator::{DimensionsValidator, SecureURLValidator};
+//! use ogp::validator::{DimensionsValidator, SecureURLValidator};
 //!
 //! struct MyData {
 //!     // ... fields for your data
@@ -70,11 +71,13 @@
 //!     fn width(&self) -> Option<u32> {
 //!         // Return the width of your data
 //!         // ...
+//!         Some(200)
 //!     }
 //!
 //!     fn height(&self) -> Option<u32> {
 //!         // Return the height of your data
 //!         // ...
+//!         Some(200)
 //!     }
 //! }
 //!
@@ -82,6 +85,7 @@
 //!     fn secure_url(&self) -> Option<url::Url> {
 //!         // Return the secure URL of your data
 //!         // ...
+//!         None
 //!     }
 //! }
 //! ```

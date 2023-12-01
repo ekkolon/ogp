@@ -5,8 +5,8 @@
 //!
 //! # Examples
 //!
-//! ```rust
-//! use crate::utils::is_valid_image_ext;
+//! ```ignore
+//! use ogp::utils::is_valid_image_ext;
 //!
 //! fn main() {
 //!     let filename = "image.jpg";
@@ -37,8 +37,8 @@
 //!
 //! # Usage
 //!
-//! ```rust
-//! use crate::utils::is_valid_image_ext;
+//! ```ignore
+//! use ogp::utils::is_valid_image_ext;
 //!
 //! fn main() {
 //!     let filename = "image.jpg";

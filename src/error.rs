@@ -3,14 +3,24 @@
 //! The `Error` enum provides variants for different error scenarios,
 //! and each variant carries relevant information about the error.
 //!
-//! # Examples
+//! # Usage
+//!
+//! This module makes use of the `thiserror` crate for convenient error handling and derivation of the `Error` trait.
 //!
 //! ```rust
-//! use crate::error::Error;
+//! use ogp::error::Error;
+//! use ogp::Result;
 //!
-//! fn process_data() -> Result<(), Error> {
+//! fn process_data() -> Result<()> {
 //!     // Your code that might result in an error
 //!     // ...
+//!     Ok(())
+//! }
+//!
+//! fn main() {
+//!     if let Err(err) = process_data() {
+//!         eprintln!("Error: {}", err);
+//!     }
 //! }
 //! ```
 //!
@@ -24,20 +34,6 @@
 //! - `InvalidHttpsUrlScheme`: Represents an error for an invalid URL scheme in the context of HTTPS. The URL must start with 'https://'.
 //! - `InvalidImageExtension`: Represents an error for an invalid image extension. Only 'png', 'jpg', 'jpeg', 'gif', or 'webp' images are allowed.
 //! - `IncompleteImageDimensions`: Represents an error for incomplete visual object dimensions. Only one dimension value is found, but values for both 'width' and 'height' are required.
-//!
-//! # Usage
-//!
-//! ```rust
-//! use crate::error::Error;
-//!
-//! fn main() {
-//!     if let Err(err) = process_data() {
-//!         eprintln!("Error: {}", err);
-//!     }
-//! }
-//! ```
-//!
-//! This module makes use of the `thiserror` crate for convenient error handling and derivation of the `Error` trait.
 //!
 //! # Dependencies
 //!

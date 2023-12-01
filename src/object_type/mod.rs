@@ -22,7 +22,7 @@
 //! # Usage
 //!
 //! ```rust
-//! use crate::object_type::ObjectType;
+//! use ogp::object_type::ObjectType;
 //!
 //! let music_song = ObjectType::MusicSong;
 //! let video_movie = ObjectType::VideoMovie;
