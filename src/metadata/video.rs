@@ -2,8 +2,8 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::Result;
 use crate::validator::{DimensionsValidator, Validator};
+use crate::Result;
 
 /// `Image` contains Open Graph metadata for the `video` metatag(s).
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
