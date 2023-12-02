@@ -1,7 +1,7 @@
 //! Metadata utility for the Open Graph `article` meta tag.
 
 use crate::{
-  builder::{Metadata, MetadataBuilder, ObjectMetadata},
+  builder::{Metadata, MetadataBuilder},
   error::Error,
   object_type::ObjectType,
 };
@@ -35,7 +35,7 @@ pub struct Article {
   pub tag: Option<String>,
 
   #[serde(flatten)]
-  metadata: ObjectMetadata,
+  metadata: MetadataBuilder,
 }
 
 impl Article {

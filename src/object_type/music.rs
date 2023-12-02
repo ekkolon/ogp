@@ -1,17 +1,13 @@
 //! Metadata utility for the Open Graph `music` meta tag.
 
-use crate::{
-  builder::{MetadataBuilder, ObjectMetadata},
-  object_type::ObjectType,
-  Result,
-};
+use crate::{builder::MetadataBuilder, object_type::ObjectType, Result};
 use serde::{de::IntoDeserializer, Deserialize, Serialize};
 
 // TODO: Add missing props
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct MusicAlbum {
   #[serde(flatten)]
-  metadata: ObjectMetadata,
+  metadata: MetadataBuilder,
 }
 
 impl MusicAlbum {
@@ -26,7 +22,7 @@ impl MusicAlbum {
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct MusicSong {
   #[serde(flatten)]
-  metadata: ObjectMetadata,
+  metadata: MetadataBuilder,
 }
 
 impl MusicSong {
@@ -41,7 +37,7 @@ impl MusicSong {
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct MusicPlaylist {
   #[serde(flatten)]
-  metadata: ObjectMetadata,
+  metadata: MetadataBuilder,
 }
 
 impl MusicPlaylist {
@@ -56,7 +52,7 @@ impl MusicPlaylist {
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct MusicRadioStation {
   #[serde(flatten)]
-  metadata: ObjectMetadata,
+  metadata: MetadataBuilder,
 }
 
 impl MusicRadioStation {

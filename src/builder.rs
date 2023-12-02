@@ -70,17 +70,11 @@ pub struct Metadata {
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct MetadataBuilder {
-  #[serde(flatten)]
-  pub metadata: Metadata,
-}
-
-#[derive(Serialize, Deserialize, Default, Debug, Clone)]
-pub struct ObjectMetadata {
   #[serde(rename = "og:type")]
-  pub object_type: ObjectType,
+  object_type: ObjectType,
 
   #[serde(flatten)]
-  pub metadata: Metadata,
+  metadata: Metadata,
 }
 
 impl MetadataBuilder {
@@ -88,8 +82,8 @@ impl MetadataBuilder {
     MetadataBuilder::default()
   }
 
-  pub fn with_type(object_type: ObjectType) -> ObjectMetadata {
-    ObjectMetadata {
+  pub fn with_type(object_type: ObjectType) -> MetadataBuilder {
+    MetadataBuilder {
       object_type,
       ..Default::default()
     }
@@ -98,7 +92,7 @@ impl MetadataBuilder {
   // ==============================
   // region:    Required properties
   pub fn set_title(&mut self, title: impl Into<String>) -> &mut Self {
-    self.metadata.title = Some(title.into());
+    self.metadata.title.insert(title.into());
     self
   }
 
@@ -106,12 +100,12 @@ impl MetadataBuilder {
     &mut self,
     description: impl Into<String>,
   ) -> &mut Self {
-    self.metadata.description = Some(description.into());
+    self.metadata.description.insert(description.into());
     self
   }
 
   pub fn set_url(&mut self, url: impl Into<String>) -> &mut Self {
-    self.metadata.url = Some(url.into());
+    self.metadata.url.insert(url.into());
     self
   }
 
@@ -138,7 +132,7 @@ impl MetadataBuilder {
 
   // Optional properties
   pub fn set_site_name(&mut self, site_name: impl Into<String>) -> &mut Self {
-    self.metadata.site_name = Some(site_name.into());
+    self.metadata.site_name.insert(site_name.into());
     self
   }
 
@@ -146,12 +140,12 @@ impl MetadataBuilder {
     &mut self,
     determinator: impl Into<String>,
   ) -> &mut Self {
-    self.metadata.determinator = Some(determinator.into());
+    self.metadata.determinator.insert(determinator.into());
     self
   }
 
   pub fn set_locale(&mut self, locale: impl Into<String>) -> &mut Self {
-    self.metadata.locale = Some(locale.into());
+    self.metadata.locale.insert(locale.into());
     self
   }
 

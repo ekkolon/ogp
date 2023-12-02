@@ -1,10 +1,6 @@
 //! Metadata utility for the Open Graph `profile` meta tag.
 
-use crate::{
-  builder::{MetadataBuilder, ObjectMetadata},
-  object_type::ObjectType,
-  Result,
-};
+use crate::{builder::MetadataBuilder, object_type::ObjectType, Result};
 use serde::{de::IntoDeserializer, Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -36,7 +32,7 @@ pub struct Profile {
   pub gender: Option<Gender>,
 
   #[serde(flatten)]
-  metadata: ObjectMetadata,
+  metadata: MetadataBuilder,
 }
 
 impl Profile {
