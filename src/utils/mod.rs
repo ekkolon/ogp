@@ -57,7 +57,7 @@
 
 /// A constant array containing the allowed image file extensions.
 pub const ALLOWED_MEDIA_FILE_EXT: [&str; 5] =
-    ["png", "jpg", "jpeg", "gif", "webp"];
+  ["png", "jpg", "jpeg", "gif", "webp"];
 
 /// Checks if a given filename has a valid image extension based on a predefined set of allowed extensions.
 ///
@@ -69,47 +69,47 @@ pub const ALLOWED_MEDIA_FILE_EXT: [&str; 5] =
 ///
 /// Returns `true` if the filename has a valid image extension, otherwise `false`.
 pub fn is_valid_image_ext(filename: &str) -> bool {
-    let parts: Vec<&str> = filename.split('.').collect();
-    let last_part = parts.last();
-    if last_part.is_none() {
-        return false;
-    }
+  let parts: Vec<&str> = filename.split('.').collect();
+  let last_part = parts.last();
+  if last_part.is_none() {
+    return false;
+  }
 
-    let ext = last_part.unwrap().to_lowercase();
-    ALLOWED_MEDIA_FILE_EXT.contains(&ext.as_str())
+  let ext = last_part.unwrap().to_lowercase();
+  ALLOWED_MEDIA_FILE_EXT.contains(&ext.as_str())
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+  use super::*;
 
-    #[test]
-    fn valid_image_extension() {
-        let filename = "image.jpg";
-        assert!(is_valid_image_ext(filename));
-    }
+  #[test]
+  fn valid_image_extension() {
+    let filename = "image.jpg";
+    assert!(is_valid_image_ext(filename));
+  }
 
-    #[test]
-    fn valid_image_extension_lowercase() {
-        let filename = "image.jpeg";
-        assert!(is_valid_image_ext(filename));
-    }
+  #[test]
+  fn valid_image_extension_lowercase() {
+    let filename = "image.jpeg";
+    assert!(is_valid_image_ext(filename));
+  }
 
-    #[test]
-    fn invalid_image_extension() {
-        let filename = "document.pdf";
-        assert!(!is_valid_image_ext(filename));
-    }
+  #[test]
+  fn invalid_image_extension() {
+    let filename = "document.pdf";
+    assert!(!is_valid_image_ext(filename));
+  }
 
-    #[test]
-    fn no_extension() {
-        let filename = "file_without_extension";
-        assert!(!is_valid_image_ext(filename));
-    }
+  #[test]
+  fn no_extension() {
+    let filename = "file_without_extension";
+    assert!(!is_valid_image_ext(filename));
+  }
 
-    #[test]
-    fn case_sensitive_extension() {
-        let filename = "image.JPG";
-        assert!(is_valid_image_ext(filename));
-    }
+  #[test]
+  fn case_sensitive_extension() {
+    let filename = "image.JPG";
+    assert!(is_valid_image_ext(filename));
+  }
 }

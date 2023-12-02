@@ -95,48 +95,48 @@ use crate::{error::Error, Result};
 
 /// A trait for general validation.
 pub trait Validator {
-    /// Validates the data and returns a `Result<()>` indicating success or failure.
-    fn validate(&self) -> Result<()>;
+  /// Validates the data and returns a `Result<()>` indicating success or failure.
+  fn validate(&self) -> Result<()>;
 }
 
 /// A trait for validating dimensions, including width and height.
 pub trait DimensionsValidator {
-    /// Retrieves the width of the data.
-    fn width(&self) -> Option<u32>;
+  /// Retrieves the width of the data.
+  fn width(&self) -> Option<u32>;
 
-    /// Retrieves the height of the data.
-    fn height(&self) -> Option<u32>;
+  /// Retrieves the height of the data.
+  fn height(&self) -> Option<u32>;
 
-    /// Validates that both width and height are present when needed.
-    fn validate_dimensions(&self) -> Result<()> {
-        if self.height().is_some() && self.width().is_none() {
-            return Err(Error::IncompleteImageDimensions("width"));
-        } else if self.width().is_some() && self.height().is_none() {
-            return Err(Error::IncompleteImageDimensions("height"));
-        }
-
-        Ok(())
+  /// Validates that both width and height are present when needed.
+  fn validate_dimensions(&self) -> Result<()> {
+    if self.height().is_some() && self.width().is_none() {
+      return Err(Error::IncompleteImageDimensions("width"));
+    } else if self.width().is_some() && self.height().is_none() {
+      return Err(Error::IncompleteImageDimensions("height"));
     }
+
+    Ok(())
+  }
 }
 
 /// A trait for validating secure URLs.
 pub trait SecureURLValidator {
-    /// Retrieves the secure URL of the data.
-    fn secure_url(&self) -> Option<url::Url>;
+  /// Retrieves the secure URL of the data.
+  fn secure_url(&self) -> Option<url::Url>;
 
-    /// Validates that the URL uses the "https" scheme.
-    fn validate_secure_url(&self) -> Result<()> {
-        match self.secure_url() {
-            None => Ok(()),
-            Some(url) => {
-                let scheme = url.scheme();
-                if scheme == "https" {
-                    return Ok(());
-                }
-
-                let err = Error::InvalidHttpsUrlScheme(scheme.into());
-                Err(err)
-            }
+  /// Validates that the URL uses the "https" scheme.
+  fn validate_secure_url(&self) -> Result<()> {
+    match self.secure_url() {
+      None => Ok(()),
+      Some(url) => {
+        let scheme = url.scheme();
+        if scheme == "https" {
+          return Ok(());
         }
+
+        let err = Error::InvalidHttpsUrlScheme(scheme.into());
+        Err(err)
+      }
     }
+  }
 }
