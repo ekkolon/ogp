@@ -38,30 +38,54 @@ pub mod music;
 pub mod profile;
 
 /// The type of object in the graph this refers to.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub enum ObjectType {
   /// Represents a song in the music category.
+  #[serde(rename = "music.song")]
   MusicSong,
+
   /// Represents a music album.
+  #[serde(rename = "music.album")]
   MusicAlbum,
+
   /// Represents a music playlist.
+  #[serde(rename = "music.playlist")]
   MusicPlaylist,
+
   /// Represents a radio station in the music category.
+  #[serde(rename = "music.radio_station")]
   MusicRadioStation,
+
   /// Represents a movie in the video category.
+  #[serde(rename = "video.movie")]
   VideoMovie,
+
   /// Represents an episode of a TV show in the video category.
+  #[serde(rename = "video.episode")]
   VideoEpisode,
+
   /// Represents a TV show in the video category.
+  #[serde(rename = "video.tv_show")]
   VideoTvShow,
+
   /// Represents miscellaneous video content.
+  #[serde(rename = "video.other")]
   VideoOther,
+
   /// Represents an article.
+  #[serde(rename = "article")]
   Article,
+
   /// Represents a book.
+  #[serde(rename = "book")]
   Book,
+
   /// Represents a user profile.
+  #[serde(rename = "profile")]
   Profile,
+
   /// Represents a website.
+  #[default]
+  #[serde(rename = "website")]
   Website,
 }
