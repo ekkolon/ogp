@@ -1,6 +1,6 @@
 use crate::{
   error::Error,
-  metadata::{audio, image, video},
+  metadata::{Audio, Image, Video},
   object_type::ObjectType,
   Result,
 };
@@ -45,27 +45,27 @@ pub struct Metadata {
 
   /// A brief description of the content, usually between 2 and 4 sentences.
   #[serde(default)]
-  pub image: Option<image::Image>,
+  pub image: Option<Image>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
   #[serde(default)]
-  pub video: Option<video::Video>,
+  pub video: Option<Video>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
   #[serde(default)]
-  pub audio: Option<audio::Audio>,
+  pub audio: Option<Audio>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
   #[serde(default)]
-  pub images: Vec<image::Image>,
+  pub images: Vec<Image>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
   #[serde(default)]
-  pub videos: Vec<video::Video>,
+  pub videos: Vec<Video>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
   #[serde(default)]
-  pub audios: Vec<audio::Audio>,
+  pub audios: Vec<Audio>,
 }
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]

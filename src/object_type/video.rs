@@ -1,13 +1,11 @@
 //! Metadata utility for the Open Graph `music` meta tag.
 
 use crate::{
-  builder::{Metadata, MetadataBuilder, ObjectMetadata},
-  error::Error,
-  metadata::{audio, image, video},
+  builder::{MetadataBuilder, ObjectMetadata},
   object_type::ObjectType,
   Result,
 };
-use serde::{de::IntoDeserializer, Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 
 // TODO: Add missing props
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]

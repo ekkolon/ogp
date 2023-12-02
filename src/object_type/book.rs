@@ -1,13 +1,11 @@
 //! Metadata utility for the Open Graph `book` meta tag.
 
 use crate::{
-  builder::{Metadata, MetadataBuilder, ObjectMetadata},
-  error::Error,
-  metadata::{audio, image, video},
+  builder::{MetadataBuilder, ObjectMetadata},
   object_type::ObjectType,
   Result,
 };
-use serde::{de::IntoDeserializer, Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct Book {

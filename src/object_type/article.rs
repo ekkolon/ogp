@@ -3,11 +3,10 @@
 use crate::{
   builder::{Metadata, MetadataBuilder, ObjectMetadata},
   error::Error,
-  metadata::{audio, image, video},
   object_type::ObjectType,
-  Result,
 };
-use serde::{de::IntoDeserializer, Deserialize, Serialize};
+
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct Article {

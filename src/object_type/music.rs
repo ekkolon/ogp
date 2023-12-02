@@ -1,9 +1,7 @@
 //! Metadata utility for the Open Graph `music` meta tag.
 
 use crate::{
-  builder::{Metadata, MetadataBuilder, ObjectMetadata},
-  error::Error,
-  metadata::{audio, image, video},
+  builder::{MetadataBuilder, ObjectMetadata},
   object_type::ObjectType,
   Result,
 };
