@@ -77,4 +77,8 @@ pub enum Error {
         'width' and 'height' are required"
   )]
   IncompleteImageDimensions(&'static str),
+
+  /// Represents an error for when an object is missing a property.
+  #[error("Missing required property '{0}'")]
+  MissingRequiredProperty(String),
 }
