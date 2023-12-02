@@ -36,6 +36,7 @@ pub mod article;
 pub mod book;
 pub mod music;
 pub mod profile;
+pub mod website;
 
 /// The type of object in the graph this refers to.
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
