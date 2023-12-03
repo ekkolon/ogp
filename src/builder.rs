@@ -40,7 +40,7 @@ pub struct Metadata {
   pub locale: Option<String>,
 
   /// The title of your article without any branding such as your site name.
-  #[serde(rename = "og:locale")]
+  #[serde(rename = "og:locale:alternate")]
   pub locale_alternate: Option<Vec<String>>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
