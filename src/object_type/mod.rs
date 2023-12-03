@@ -118,13 +118,17 @@ impl ObjectType {
 pub enum Determiner {
   #[serde(rename = "a")]
   A,
+
   #[serde(rename = "an")]
   An,
+
   #[serde(rename = "the")]
   The,
+
   #[default]
   #[serde(rename = "")]
   Blank,
+
   #[serde(rename = "auto")]
   Auto,
 }
