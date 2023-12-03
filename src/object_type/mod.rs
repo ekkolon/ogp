@@ -175,6 +175,7 @@ mod tests {
     assert_eq!(Determiner::from_string("a"), Determiner::A)
   }
 
+  #[test]
   fn auto_determiner() {
     assert_eq!(Determiner::from_string("auto"), Determiner::Auto)
   }
