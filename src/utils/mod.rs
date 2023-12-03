@@ -55,6 +55,30 @@
 
 #![allow(dead_code)]
 
+use std::str::FromStr;
+
+use isocountry::CountryCode as Country;
+use isolang::Language;
+use regex::Regex;
+use url::Url;
+
+use crate::{error::Error, Result};
+
+//
+pub fn validate_site_url(url: &str) -> Result<Url> {
+  match Url::from_str(url) {
+    Err(err) => Err(Error::UrlParseError(err.to_string())),
+    Ok(url) => {
+      let scheme = url.scheme();
+      if scheme == "http" || scheme == "https" {
+        return Ok(url);
+      }
+
+      Err(Error::InvalidHttpUrlScheme(scheme.into()))
+    }
+  }
+}
+
 /// A constant array containing the allowed image file extensions.
 pub const ALLOWED_MEDIA_FILE_EXT: [&str; 5] =
   ["png", "jpg", "jpeg", "gif", "webp"];
@@ -79,10 +103,89 @@ pub fn is_valid_image_ext(filename: &str) -> bool {
   ALLOWED_MEDIA_FILE_EXT.contains(&ext.as_str())
 }
 
+/// Check if a given string value represents a valid locale
+/// in the format `language_TERRITORY` (e.g "en_US").
+///
+/// # Arguments
+///
+/// * `locale` - A string representing the locale to be checked.
+///
+/// # Returns
+///
+/// Returns `true` if the locale is in the correct format, otherwise `false`.
+pub fn validate_locale(locale: &str) -> Result<()> {
+  if locale.is_empty() {
+    return Err(Error::EmptyLocale);
+  }
+
+  let chars = locale.chars();
+  let num_chars = chars.count();
+  if num_chars != 5 {
+    return Err(Error::InvalidLocaleLength(num_chars.to_string()));
+  }
+
+  if !is_valid_locale_format(locale) {
+    return Err(Error::InvalidLocaleFormat(locale.into()));
+  }
+
+  let parts: Vec<&str> = locale.split('_').collect();
+  let lang = parts[0];
+  let country = parts[1];
+
+  let Some(_) = Language::from_639_1(lang) else {
+    return Err(Error::InvalidLocaleLanguageCode(lang.into()));
+  };
+
+  let Some(_) = Country::for_alpha2(lang).err() else {
+    return Err(Error::InvalidLocaleCountryCode(lang.into()));
+  };
+
+  Ok(())
+}
+
+fn is_valid_locale_format(locale: &str) -> bool {
+  let regex_pattern = r"^[a-zA-Z]{2}_[a-zA-Z]{2}$";
+  let regex = Regex::new(regex_pattern).unwrap();
+  regex.is_match(locale)
+}
+
 #[cfg(test)]
 mod tests {
   use super::*;
 
+  // region    validate_site_url
+  #[test]
+  fn valid_http_url() {
+    let url = "http://example.com";
+    assert!(validate_site_url(url).is_ok());
+  }
+
+  #[test]
+  fn valid_https_url() {
+    let url = "https://example.com";
+    assert!(validate_site_url(url).is_ok());
+  }
+
+  #[test]
+  fn invalid_url_scheme() {
+    let url = "ftp://example.com";
+    assert!(validate_site_url(url).is_err());
+  }
+
+  #[test]
+  fn invalid_url_format() {
+    let url = "invalid-url";
+    assert!(validate_site_url(url).is_err());
+  }
+
+  #[test]
+  fn missing_url_scheme() {
+    let url = "example.com";
+    assert!(validate_site_url(url).is_err());
+  }
+  // endregion validate_site_url
+
+  // region    is_valid_image_ext
   #[test]
   fn valid_image_extension() {
     let filename = "image.jpg";
@@ -112,4 +215,37 @@ mod tests {
     let filename = "image.JPG";
     assert!(is_valid_image_ext(filename));
   }
+  // endregion is_valid_image_extension
+
+  // region    validate_locale
+  #[test]
+  fn valid_locale() {
+    assert!(validate_locale("en_US").is_ok());
+    assert!(validate_locale("de_DE").is_ok());
+    assert!(validate_locale("fr_FR").is_ok());
+  }
+
+  #[test]
+  fn empty_locale() {
+    assert!(validate_locale("").is_err());
+  }
+
+  #[test]
+  fn invalid_locale_length() {
+    assert!(validate_locale("en_USA").is_err());
+    assert!(validate_locale("enU").is_err());
+  }
+
+  #[test]
+  fn invalid_locale_language_code() {
+    assert!(validate_locale("eng_US").is_err());
+    assert!(validate_locale("_US").is_err());
+  }
+
+  #[test]
+  fn invalid_locale_country_code() {
+    assert!(validate_locale("en_USA").is_err());
+    assert!(validate_locale("en_").is_err());
+  }
+  // endregion validate_locale
 }

@@ -1,10 +1,14 @@
+use std::str::FromStr;
+
 use crate::{
   error::Error,
   metadata::{Audio, Image, Video},
   object_type::ObjectType,
+  utils::{validate_locale, validate_site_url},
   Result,
 };
 use serde::{de::IntoDeserializer, Deserialize, Serialize};
+use url::Url;
 
 /// `GeneralSiteInfo` contains Open Graph metadata shared by all object types.
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
@@ -40,7 +44,7 @@ pub struct Metadata {
   pub locale: Option<String>,
 
   /// The title of your article without any branding such as your site name.
-  #[serde(rename = "og:locale")]
+  #[serde(rename = "og:locale:alternate")]
   pub locale_alternate: Option<Vec<String>>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
@@ -70,17 +74,11 @@ pub struct Metadata {
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct MetadataBuilder {
-  #[serde(flatten)]
-  pub metadata: Metadata,
-}
-
-#[derive(Serialize, Deserialize, Default, Debug, Clone)]
-pub struct ObjectMetadata {
   #[serde(rename = "og:type")]
-  pub object_type: ObjectType,
+  object_type: ObjectType,
 
   #[serde(flatten)]
-  pub metadata: Metadata,
+  metadata: Metadata,
 }
 
 impl MetadataBuilder {
@@ -88,8 +86,8 @@ impl MetadataBuilder {
     MetadataBuilder::default()
   }
 
-  pub fn with_type(object_type: ObjectType) -> ObjectMetadata {
-    ObjectMetadata {
+  pub fn with_type(object_type: ObjectType) -> MetadataBuilder {
+    MetadataBuilder {
       object_type,
       ..Default::default()
     }
@@ -98,7 +96,7 @@ impl MetadataBuilder {
   // ==============================
   // region:    Required properties
   pub fn set_title(&mut self, title: impl Into<String>) -> &mut Self {
-    self.metadata.title = Some(title.into());
+    self.metadata.title.insert(title.into());
     self
   }
 
@@ -106,13 +104,18 @@ impl MetadataBuilder {
     &mut self,
     description: impl Into<String>,
   ) -> &mut Self {
-    self.metadata.description = Some(description.into());
+    self.metadata.description.insert(description.into());
     self
   }
 
   pub fn set_url(&mut self, url: impl Into<String>) -> &mut Self {
-    self.metadata.url = Some(url.into());
-    self
+    match validate_site_url(&url.into()) {
+      Err(err) => panic!("error: {}", err),
+      Ok(url) => {
+        self.metadata.url.insert(url.into());
+        self
+      }
+    }
   }
 
   pub fn set_image(&mut self, image: impl Into<String>) -> &mut Self {
@@ -138,7 +141,7 @@ impl MetadataBuilder {
 
   // Optional properties
   pub fn set_site_name(&mut self, site_name: impl Into<String>) -> &mut Self {
-    self.metadata.site_name = Some(site_name.into());
+    self.metadata.site_name.insert(site_name.into());
     self
   }
 
@@ -146,13 +149,19 @@ impl MetadataBuilder {
     &mut self,
     determinator: impl Into<String>,
   ) -> &mut Self {
-    self.metadata.determinator = Some(determinator.into());
+    self.metadata.determinator.insert(determinator.into());
     self
   }
 
   pub fn set_locale(&mut self, locale: impl Into<String>) -> &mut Self {
-    self.metadata.locale = Some(locale.into());
-    self
+    let val: String = locale.into();
+    match validate_locale(&val) {
+      Err(err) => panic!("error: {}", err),
+      Ok(_) => {
+        self.metadata.locale.insert(val);
+        self
+      }
+    }
   }
 
   pub fn add_locale_alternate(

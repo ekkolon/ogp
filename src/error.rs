@@ -54,6 +54,11 @@ pub enum Error {
   IO(#[from] std::io::Error),
 
   /// Represents an error for an invalid URL scheme. It must be one of 'http' or 'https'.
+  #[error("{0}")]
+  UrlParseError(String),
+
+  /// Represents an error for an invalid URL scheme.
+  /// It must be one of 'http' or 'https'.
   #[error("Invalid URL scheme '{0}'. Must be one of 'http'|'https'")]
   InvalidHttpUrlScheme(String),
 
@@ -81,4 +86,46 @@ pub enum Error {
   /// Represents an error for when an object is missing a property.
   #[error("Missing required property '{0}'")]
   MissingRequiredProperty(String),
+
+  /// Represents an error for when an object is missing a property.
+  #[error(
+    "Locale '{0}' is invalid. \
+    Must be in format `language_TERRITORY` (e.g. 'en_US')"
+  )]
+  InvalidLocale(String),
+
+  /// Represents an error for when an object is missing a property.
+  #[error(
+    "Invalid Locale format '{0}'. \
+    Must be in format `language_TERRITORY` (e.g. 'en_US')"
+  )]
+  InvalidLocaleFormat(String),
+
+  /// Represents an error for when an object is missing a property.
+  #[error(
+    "Expected Locale value with length of 5 but actual length is '{0}'. \
+      Must be in format `language_TERRITORY` (e.g. 'en_US')"
+  )]
+  InvalidLocaleLength(String),
+
+  /// Represents an error for when an object is missing a property.
+  #[error(
+    "Locale '{0}' contains an invalid language code. \
+    Language codes must be in ISO 639-1 format."
+  )]
+  InvalidLocaleLanguageCode(String),
+
+  /// Represents an error for when an object is missing a property.
+  #[error(
+    "Locale '{0}' contains an invalid country code. \
+    Country codes must be in ISO 3166 format."
+  )]
+  InvalidLocaleCountryCode(String),
+
+  /// Represents an error for when an object is missing a property.
+  #[error(
+    "Locale is empty. \
+    Must be in format `language_TERRITORY` (e.g. 'en_US')"
+  )]
+  EmptyLocale,
 }
