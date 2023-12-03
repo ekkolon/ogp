@@ -36,8 +36,8 @@ pub struct Metadata {
   pub site_name: Option<String>,
 
   /// The title of your article without any branding such as your site name.
-  #[serde(rename = "og:determinator")]
-  pub determinator: Option<String>,
+  #[serde(rename = "og:determiner")]
+  pub determiner: Option<String>,
 
   /// The title of your article without any branding such as your site name.
   #[serde(rename = "og:locale")]
@@ -145,11 +145,8 @@ impl MetadataBuilder {
     self
   }
 
-  pub fn set_determinator(
-    &mut self,
-    determinator: impl Into<String>,
-  ) -> &mut Self {
-    self.metadata.determinator.insert(determinator.into());
+  pub fn set_determiner(&mut self, determiner: impl Into<String>) -> &mut Self {
+    self.metadata.determiner.insert(determiner.into());
     self
   }
 
