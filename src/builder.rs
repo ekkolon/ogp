@@ -2,6 +2,7 @@ use crate::{
   error::Error,
   metadata::{Audio, Image, Video},
   object_type::ObjectType,
+  utils::validate_locale,
   Result,
 };
 use serde::{de::IntoDeserializer, Deserialize, Serialize};
@@ -145,8 +146,14 @@ impl MetadataBuilder {
   }
 
   pub fn set_locale(&mut self, locale: impl Into<String>) -> &mut Self {
-    self.metadata.locale.insert(locale.into());
-    self
+    let val: String = locale.into();
+    match validate_locale(&val) {
+      Err(err) => panic!("error: {}", err),
+      Ok(_) => {
+        self.metadata.locale.insert(val);
+        self
+      }
+    }
   }
 
   pub fn add_locale_alternate(
