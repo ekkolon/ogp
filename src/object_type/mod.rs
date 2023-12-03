@@ -93,6 +93,14 @@ pub enum ObjectType {
 }
 
 impl ObjectType {
+  /// Performs a value conversion from any value that implements the `Into` trait
+  /// to an Open Graph object type.
+  ///
+  /// ## Returns
+  ///
+  /// The transformed string value as `ObjectType`.
+  ///
+  /// Falls back to `ObjectType::Website`, if provided value does not match any valid string.
   pub fn from_string(value: impl Into<String>) -> ObjectType {
     let obj_type: &str = &value.into();
 
