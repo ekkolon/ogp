@@ -91,3 +91,26 @@ pub enum ObjectType {
   #[serde(rename = "website")]
   Website,
 }
+
+impl ObjectType {
+  pub fn from_string(value: impl Into<String>) -> ObjectType {
+    let obj_type: &str = &value.into();
+
+    match obj_type {
+      "article" => ObjectType::Article,
+      "book" => ObjectType::Book,
+      "profile" => ObjectType::Profile,
+      "website" => ObjectType::Website,
+      "music.song" => ObjectType::MusicSong,
+      "music.album" => ObjectType::MusicAlbum,
+      "music.playlist" => ObjectType::MusicPlaylist,
+      "music.radio_station" => ObjectType::MusicRadioStation,
+      "video.movie" => ObjectType::VideoMovie,
+      "video.episode" => ObjectType::VideoEpisode,
+      "video.tv_show" => ObjectType::VideoTvShow,
+      "video.other" => ObjectType::VideoOther,
+      _ => ObjectType::Website,
+    }
+  }
+}
+
