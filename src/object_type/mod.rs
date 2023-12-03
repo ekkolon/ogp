@@ -40,7 +40,7 @@ pub mod video;
 pub mod website;
 
 /// The type of object in the graph this refers to.
-#[derive(Serialize, Deserialize, Default, Debug, Clone)]
+#[derive(Serialize, Deserialize, Default, Debug, Clone, PartialEq)]
 pub enum ObjectType {
   /// Represents a song in the music category.
   #[serde(rename = "music.song")]
@@ -161,6 +161,60 @@ impl Determiner {
 #[cfg(test)]
 mod tests {
   use super::*;
+
+  // region    ObjectType
+  // ========================================
+  #[test]
+  fn object_type_website_conversion() {
+    // Should fall back to ObjectType::Website when invalid value is provided
+    assert_eq!(ObjectType::from_string("podcast"), ObjectType::Website);
+
+    assert_eq!(ObjectType::from_string("website"), ObjectType::Website);
+  }
+
+  #[test]
+  fn object_type_article_conversion() {
+    assert_eq!(ObjectType::from_string("article"), ObjectType::Article)
+  }
+
+  #[test]
+  fn object_type_music_conversion() {
+    assert_eq!(
+      ObjectType::from_string("music.album"),
+      ObjectType::MusicAlbum
+    );
+    assert_eq!(
+      ObjectType::from_string("music.playlist"),
+      ObjectType::MusicPlaylist
+    );
+    assert_eq!(
+      ObjectType::from_string("music.radio_station"),
+      ObjectType::MusicRadioStation
+    );
+    assert_eq!(ObjectType::from_string("music.song"), ObjectType::MusicSong);
+  }
+
+  #[test]
+  fn object_type_video_conversion() {
+    assert_eq!(
+      ObjectType::from_string("video.episode"),
+      ObjectType::VideoEpisode
+    );
+    assert_eq!(
+      ObjectType::from_string("video.movie"),
+      ObjectType::VideoMovie
+    );
+    assert_eq!(
+      ObjectType::from_string("video.other"),
+      ObjectType::VideoOther
+    );
+    assert_eq!(
+      ObjectType::from_string("video.tv_show"),
+      ObjectType::VideoTvShow
+    );
+  }
+  // ========================================
+  // endregion ObjectType
 
   // region    Determiner
   #[test]
