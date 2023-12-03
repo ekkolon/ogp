@@ -114,3 +114,30 @@ impl ObjectType {
   }
 }
 
+#[derive(Serialize, Deserialize, Default, Debug, Clone, PartialEq)]
+pub enum Determiner {
+  #[serde(rename = "a")]
+  A,
+  #[serde(rename = "an")]
+  An,
+  #[serde(rename = "the")]
+  The,
+  #[default]
+  #[serde(rename = "")]
+  Blank,
+  #[serde(rename = "auto")]
+  Auto,
+}
+
+impl Determiner {
+  pub fn from_string(value: impl Into<String>) -> Determiner {
+    let determ: &str = &value.into();
+    match determ {
+      "a" => Determiner::A,
+      "an" => Determiner::An,
+      "the" => Determiner::The,
+      "auto" => Determiner::Auto,
+      _ => Determiner::Blank,
+    }
+  }
+}
