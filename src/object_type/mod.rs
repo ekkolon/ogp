@@ -145,3 +145,34 @@ impl Determiner {
     }
   }
 }
+
+#[cfg(test)]
+mod tests {
+  use super::*;
+
+  // region    Determiner
+  #[test]
+  fn blank_determiner_if_nomatch() {
+    assert_eq!(Determiner::from_string("that"), Determiner::Blank)
+  }
+
+  #[test]
+  fn literal_the_determiner() {
+    assert_eq!(Determiner::from_string("the"), Determiner::The)
+  }
+
+  #[test]
+  fn literal_an_determiner() {
+    assert_eq!(Determiner::from_string("an"), Determiner::An)
+  }
+
+  #[test]
+  fn literal_a_determiner() {
+    assert_eq!(Determiner::from_string("a"), Determiner::A)
+  }
+
+  fn auto_determiner() {
+    assert_eq!(Determiner::from_string("auto"), Determiner::Auto)
+  }
+  // endregion Determiner
+}
