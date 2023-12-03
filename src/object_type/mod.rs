@@ -115,8 +115,8 @@ impl ObjectType {
 }
 
 /// Enum representing the word that appears before an Open Graph object's title in a sentence.
-/// If auto is chosen, the consumer of your data should chose between "a" or "an". 
-/// 
+/// If auto is chosen, the consumer of your data should chose between "a" or "an".
+///
 /// Default is "" (blank).
 #[derive(Serialize, Deserialize, Default, Debug, Clone, PartialEq)]
 pub enum Determiner {
