@@ -1,21 +1,25 @@
 // NOTE: This main entrypointer exists for dev purposes only
 // and will be removed with the first release.
 
-use ogp::{
-  builder::MetadataBuilder,
-  object_type::{article::Article, website::Website},
-};
+use ogp::{builder::MetadataBuilder, object_type::website::Website};
 
 fn main() {
   let builder = MetadataBuilder::default();
 
-  let _w = Article::default();
+  let mut website_builder = builder.website();
 
-  let mut builder = builder.website();
-  builder
+  website_builder
+    .set_title("Open Graph Protocol coming to Rust")
     .set_url("https://github.com/ekkolon/ogp")
-    .set_locale("DE-de")
-    .set_title("Open Graph Protocol coming to Rust");
+    .set_site_name("OGP")
+    .set_locale("en_US")
+    .set_description(
+      "The current Open Graph Protocol crate is very outdated. \
+      That's why we're implementing this one.",
+    );
 
-  println!("{}", serde_json::to_string_pretty(&builder).unwrap())
+  println!(
+    "{}",
+    serde_json::to_string_pretty(&website_builder).unwrap()
+  )
 }
