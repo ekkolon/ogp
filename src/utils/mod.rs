@@ -55,10 +55,29 @@
 
 #![allow(dead_code)]
 
+use std::str::FromStr;
+
 use isocountry::CountryCode as Country;
 use isolang::Language;
 use regex::Regex;
+use url::Url;
+
 use crate::{error::Error, Result};
+
+//
+pub fn validate_site_url(url: &str) -> Result<Url> {
+  match Url::from_str(url) {
+    Err(err) => Err(Error::UrlParseError(err.to_string())),
+    Ok(url) => {
+      let scheme = url.scheme();
+      if scheme == "http" || scheme == "https" {
+        return Ok(url);
+      }
+
+      Err(Error::InvalidHttpUrlScheme(scheme.into()))
+    }
+  }
+}
 
 /// A constant array containing the allowed image file extensions.
 pub const ALLOWED_MEDIA_FILE_EXT: [&str; 5] =
@@ -134,6 +153,39 @@ fn is_valid_locale_format(locale: &str) -> bool {
 mod tests {
   use super::*;
 
+  // region    validate_site_url
+  #[test]
+  fn valid_http_url() {
+    let url = "http://example.com";
+    assert!(validate_site_url(url).is_ok());
+  }
+
+  #[test]
+  fn valid_https_url() {
+    let url = "https://example.com";
+    assert!(validate_site_url(url).is_ok());
+  }
+
+  #[test]
+  fn invalid_url_scheme() {
+    let url = "ftp://example.com";
+    assert!(validate_site_url(url).is_err());
+  }
+
+  #[test]
+  fn invalid_url_format() {
+    let url = "invalid-url";
+    assert!(validate_site_url(url).is_err());
+  }
+
+  #[test]
+  fn missing_url_scheme() {
+    let url = "example.com";
+    assert!(validate_site_url(url).is_err());
+  }
+  // endregion validate_site_url
+
+  // region    is_valid_image_ext
   #[test]
   fn valid_image_extension() {
     let filename = "image.jpg";
@@ -163,6 +215,7 @@ mod tests {
     let filename = "image.JPG";
     assert!(is_valid_image_ext(filename));
   }
+  // endregion is_valid_image_extension
 
   // region    validate_locale
   #[test]

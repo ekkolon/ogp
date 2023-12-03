@@ -1,11 +1,14 @@
+use std::str::FromStr;
+
 use crate::{
   error::Error,
   metadata::{Audio, Image, Video},
   object_type::ObjectType,
-  utils::validate_locale,
+  utils::{validate_locale, validate_site_url},
   Result,
 };
 use serde::{de::IntoDeserializer, Deserialize, Serialize};
+use url::Url;
 
 /// `GeneralSiteInfo` contains Open Graph metadata shared by all object types.
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
@@ -106,8 +109,13 @@ impl MetadataBuilder {
   }
 
   pub fn set_url(&mut self, url: impl Into<String>) -> &mut Self {
-    self.metadata.url.insert(url.into());
-    self
+    match validate_site_url(&url.into()) {
+      Err(err) => panic!("error: {}", err),
+      Ok(url) => {
+        self.metadata.url.insert(url.into());
+        self
+      }
+    }
   }
 
   pub fn set_image(&mut self, image: impl Into<String>) -> &mut Self {
