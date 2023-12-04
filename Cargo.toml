@@ -10,11 +10,11 @@ documentation = "https://docs.rs/ogp"
 homepage = "https://github.com/ekkolon/ogp#readme"
 categories = ["data-structures", "encoding"]
 keywords = [
-    "seo",
-    "structured-data",
-    "open-graph-protocol",
-    "social-media",
-    "rich-snippets",
+  "seo",
+  "structured-data",
+  "open-graph-protocol",
+  "social-media",
+  "rich-snippets",
 ]
 
 [badges]
@@ -24,6 +24,7 @@ maintenance = { status = "experimental" }
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+chrono = { version = "0.4.31", features = ["serde", "clock"] }
 isocountry = "0.3.2"
 isolang = "2.4.0"
 regex = "1.10.2"
