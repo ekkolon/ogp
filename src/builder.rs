@@ -121,7 +121,20 @@ impl MetadataBuilder {
     self
   }
 
-  pub fn add_image() {}
+  pub fn add_image(&mut self, img: Image) -> &mut Self {
+    self.metadata.images.push(img);
+    self
+  }
+
+  pub fn add_image_url(&mut self, image_url: impl Into<String>) -> &mut Self {
+    match Image::from_str(&image_url.into()) {
+      Err(err) => panic!("error: {:?}", err),
+      Ok(img) => self.metadata.images.push(img),
+    }
+
+    self
+  }
+
   pub fn add_video() {}
   pub fn add_audio() {}
   // endregion: Required properties
