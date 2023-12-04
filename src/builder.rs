@@ -171,6 +171,10 @@ impl MetadataBuilder {
   ) -> &mut Self {
     self
   }
+
+  pub fn get(&self) -> &Metadata {
+    &self.metadata
+  }
 }
 
 pub trait Build<T> {
