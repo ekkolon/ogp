@@ -3,7 +3,7 @@ use std::str::FromStr;
 use crate::{
   error::Error,
   metadata::{Audio, Image, Video},
-  object_type::ObjectType,
+  object_type::{Determiner, ObjectType},
   utils::{validate_locale, validate_site_url},
   Result,
 };
@@ -37,7 +37,7 @@ pub struct Metadata {
 
   /// The title of your article without any branding such as your site name.
   #[serde(rename = "og:determiner")]
-  pub determiner: Option<String>,
+  pub determiner: Option<Determiner>,
 
   /// The title of your article without any branding such as your site name.
   #[serde(rename = "og:locale")]
@@ -145,8 +145,11 @@ impl MetadataBuilder {
     self
   }
 
-  pub fn set_determiner(&mut self, determiner: impl Into<String>) -> &mut Self {
-    self.metadata.determiner.insert(determiner.into());
+  pub fn set_determiner(
+    &mut self,
+    determiner: Option<Determiner>,
+  ) -> &mut Self {
+    self.metadata.determiner = determiner;
     self
   }
 
