@@ -63,10 +63,10 @@ pub struct Metadata {
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct MetadataBuilder {
   #[serde(rename = "og:type")]
-  object_type: ObjectType,
+  pub object_type: ObjectType,
 
   #[serde(flatten)]
-  metadata: Metadata,
+  pub metadata: Metadata,
 }
 
 impl MetadataBuilder {
