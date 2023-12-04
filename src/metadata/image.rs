@@ -1,6 +1,7 @@
 //! Metadata utility for the Open Graph `image` meta tag.
 
 use serde::{Deserialize, Serialize};
+use url::Url;
 
 use crate::validator::{DimensionsValidator, Validator};
 use crate::Result;
@@ -13,11 +14,11 @@ pub struct Image {
   ///
   /// Represents both the `og:image` | "og:image:url" property.
   #[serde(rename = "og:image", alias = "og:image:url")]
-  pub url: Option<String>,
+  pub url: Option<Url>,
 
   /// An alternate url to use if the webpage requires HTTPS.
   #[serde(rename = "og:image:secure_url")]
-  pub secure_url: Option<String>,
+  pub secure_url: Option<Url>,
 
   /// A MIME type for this image.
   #[serde(rename = "og:image:type")]
