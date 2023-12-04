@@ -4,7 +4,7 @@ use crate::{
   error::Error,
   metadata::{Audio, Image, Video},
   object_type::{Determiner, ObjectType},
-  utils::{validate_locale, validate_site_url},
+  utils::{validate_http_url, validate_locale},
   Result,
 };
 use serde::{de::IntoDeserializer, Deserialize, Serialize};
@@ -109,7 +109,7 @@ impl MetadataBuilder {
   }
 
   pub fn set_url(&mut self, url: impl Into<String>) -> &mut Self {
-    match validate_site_url(&url.into()) {
+    match validate_http_url(&url.into()) {
       Err(err) => panic!("error: {}", err),
       Ok(url) => {
         self.metadata.url.insert(url.into());

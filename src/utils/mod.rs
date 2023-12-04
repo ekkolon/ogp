@@ -65,7 +65,7 @@ use url::Url;
 use crate::{error::Error, Result};
 
 //
-pub fn validate_site_url(url: &str) -> Result<Url> {
+pub fn validate_http_url(url: &str) -> Result<Url> {
   match Url::from_str(url) {
     Err(err) => Err(Error::UrlParseError(err.to_string())),
     Ok(url) => {
