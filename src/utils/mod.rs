@@ -157,31 +157,31 @@ mod tests {
   #[test]
   fn valid_http_url() {
     let url = "http://example.com";
-    assert!(validate_site_url(url).is_ok());
+    assert!(validate_http_url(url).is_ok());
   }
 
   #[test]
   fn valid_https_url() {
     let url = "https://example.com";
-    assert!(validate_site_url(url).is_ok());
+    assert!(validate_http_url(url).is_ok());
   }
 
   #[test]
   fn invalid_url_scheme() {
     let url = "ftp://example.com";
-    assert!(validate_site_url(url).is_err());
+    assert!(validate_http_url(url).is_err());
   }
 
   #[test]
   fn invalid_url_format() {
     let url = "invalid-url";
-    assert!(validate_site_url(url).is_err());
+    assert!(validate_http_url(url).is_err());
   }
 
   #[test]
   fn missing_url_scheme() {
     let url = "example.com";
-    assert!(validate_site_url(url).is_err());
+    assert!(validate_http_url(url).is_err());
   }
   // endregion validate_site_url
 
