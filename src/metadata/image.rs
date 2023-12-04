@@ -1,13 +1,17 @@
 //! Metadata utility for the Open Graph `image` meta tag.
 
+use std::str::FromStr;
+
 use serde::{Deserialize, Serialize};
 use url::Url;
 
+use crate::error::Error;
+use crate::utils::validate_http_url;
 use crate::validator::{DimensionsValidator, Validator};
 use crate::Result;
 
 /// `Image` contains Open Graph metadata for the `image` metatag(s).
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct Image {
   /// An image URL which should represent your object within the graph.
   /// This image appears when someone shares the content.
@@ -36,6 +40,21 @@ pub struct Image {
   /// The number of pixels high.
   #[serde(rename = "og:image:height")]
   pub height: Option<u32>,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct ParseImageUrlError;
+
+impl FromStr for Image {
+  type Err = ParseImageUrlError;
+  fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
+    validate_http_url(s)
+      .map(|url| Image {
+        url: Some(url),
+        ..Default::default()
+      })
+      .map_err(|err| ParseImageUrlError)
+  }
 }
 
 impl Validator for Image {
