@@ -39,9 +39,7 @@ pub struct Image {
 
 impl Validator for Image {
   fn validate(&self) -> Result<()> {
-    self.validate_dimensions().unwrap();
-
-    Ok(())
+    self.validate_dimensions()
   }
 }
 
