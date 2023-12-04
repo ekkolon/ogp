@@ -49,18 +49,6 @@ pub struct Metadata {
 
   /// A brief description of the content, usually between 2 and 4 sentences.
   #[serde(default)]
-  pub image: Option<Image>,
-
-  /// A brief description of the content, usually between 2 and 4 sentences.
-  #[serde(default)]
-  pub video: Option<Video>,
-
-  /// A brief description of the content, usually between 2 and 4 sentences.
-  #[serde(default)]
-  pub audio: Option<Audio>,
-
-  /// A brief description of the content, usually between 2 and 4 sentences.
-  #[serde(default)]
   pub images: Vec<Image>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
@@ -192,10 +180,6 @@ impl Validate for Metadata {
 
     let Some(description) = self.description.as_ref() else {
       return Err(Error::MissingRequiredProperty("description".into()));
-    };
-
-    let Some(image) = self.image.as_ref() else {
-      return Err(Error::MissingRequiredProperty("image".into()));
     };
 
     Ok(())
