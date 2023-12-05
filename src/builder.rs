@@ -48,15 +48,15 @@ pub struct Metadata {
   pub locale_alternate: Option<Vec<String>>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
-  #[serde(default)]
+  #[serde(rename = "og:image", default)]
   pub images: Vec<Image>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
-  #[serde(default)]
+  #[serde(rename = "og:video", default)]
   pub videos: Vec<Video>,
 
   /// A brief description of the content, usually between 2 and 4 sentences.
-  #[serde(default)]
+  #[serde(rename = "og:audio", default)]
   pub audios: Vec<Audio>,
 }
 
