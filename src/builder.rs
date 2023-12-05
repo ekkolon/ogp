@@ -169,6 +169,12 @@ impl MetadataBuilder {
     &mut self,
     locale: impl Into<String>,
   ) -> &mut Self {
+    if let Some(ref mut locale_alternate) = self.metadata.locale_alternate {
+      locale_alternate.push(locale.into());
+    } else {
+      self.metadata.locale_alternate.replace(vec![locale.into()]);
+    }
+
     self
   }
 
