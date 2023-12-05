@@ -1,10 +1,16 @@
 // NOTE: This main entrypoint exists for dev purposes only
 // and will be removed with the first release.
 
-use chrono::{DateTime, Utc};
-use ogp::{builder::MetadataBuilder, object_type::article::Article};
+use std::str::FromStr;
 
-fn main() {
+use chrono::{DateTime, Utc};
+use ogp::{
+  builder::MetadataBuilder, convert::ToHTML, metadata::Image,
+  object_type::article::Article, Result,
+};
+use url::Url;
+
+fn main() -> Result<()> {
   let date: DateTime<Utc> = chrono::offset::Utc::now();
   let published_time = &date.to_string();
 
@@ -15,11 +21,27 @@ fn main() {
     .set_url("https://github.com/ekkolon/ogp")
     .set_site_name("OGP")
     .set_locale("en_US")
+    .add_locale_alternate("de_DE")
     .set_description(
       "The current Open Graph Protocol crate is very outdated. \
       That's why we're implementing this one.",
     )
-    .add_image_url("https://images.unsplash.com/photo-1683009427540-c5bd6a32abf6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    .add_image(Image {
+      url: Some(
+        Url::from_str("https://images.unsplash.com/photo-1683009427540")
+          .unwrap(),
+      ),
+      alt: Some("A beautiful image".into()),
+      ..Default::default()
+    })
+    .add_image(Image {
+      url: Some(
+        Url::from_str("https://images.unsplash.com/photo-1683009427540")
+          .unwrap(),
+      ),
+      alt: Some("Another beautiful image".into()),
+      ..Default::default()
+    });
 
   let mut article_builder = base_builder.article();
 
@@ -35,5 +57,17 @@ fn main() {
       "Developers",
     ]);
 
-  println!("{}", serde_json::to_string_pretty(&article).unwrap())
+  let html = &article.to_html();
+
+  println!(
+    "ARTICLE:raw -> {}",
+    serde_json::to_string_pretty(&article).unwrap()
+  );
+
+  println!(
+    "ARTICLE:html -> {}",
+    serde_json::to_string_pretty(&html).unwrap()
+  );
+
+  Ok(())
 }
