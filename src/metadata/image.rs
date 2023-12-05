@@ -17,28 +17,28 @@ pub struct Image {
   /// This image appears when someone shares the content.
   ///
   /// Represents both the `og:image` | "og:image:url" property.
-  #[serde(rename = "og:image", alias = "og:image:url")]
+  #[serde(rename = "", alias = "og:image:url")]
   pub url: Option<Url>,
 
   /// An alternate url to use if the webpage requires HTTPS.
-  #[serde(rename = "og:image:secure_url")]
+  // #[serde(rename = "og:image:secure_url")]
   pub secure_url: Option<Url>,
 
   /// A MIME type for this image.
-  #[serde(rename = "og:image:type")]
+  // #[serde(rename = "og:image:type")]
   pub mimetype: Option<String>,
 
   /// A description of what is in the image (not a caption).
   /// If the page specifies an og:image it should specify `og:image:alt`
-  #[serde(rename = "og:image:alt")]
+  // #[serde(rename = "og:image:alt")]
   pub alt: Option<String>,
 
   /// The number of pixels wide.
-  #[serde(rename = "og:image:width")]
+  // #[serde(rename = "og:image:width")]
   pub width: Option<u32>,
 
   /// The number of pixels high.
-  #[serde(rename = "og:image:height")]
+  // #[serde(rename = "og:image:height")]
   pub height: Option<u32>,
 }
 

@@ -10,27 +10,22 @@ use crate::Result;
 pub struct Video {
   /// The URL of the video that appears when someone shares the content.
   /// Equivalent to `og:video` | "og:video:url".
-  #[serde(rename = "og:video", alias = "og:video:url")]
+  #[serde(rename = "", alias = "og:video:url")]
   pub url: Option<String>,
 
-  /// https:// URL for the video.
-  #[serde(rename = "og:video:secure_url")]
+  /// https:// URL for the video.  #[serde(rename = "og:video:secure_url")]
   pub secure_url: Option<String>,
 
   /// Equivalent to `og:video`.
-  #[serde(rename = "og:video:type")]
   pub mimetype: Option<String>,
 
   /// Equivalent to `og:video`.
-  #[serde(rename = "og:video:alt")]
   pub alt: Option<String>,
 
   /// Equivalent to `og:video`.
-  #[serde(rename = "og:video:width")]
   pub width: Option<u32>,
 
   /// Equivalent to `og:video`.
-  #[serde(rename = "og:video:height")]
   pub height: Option<u32>,
 }
 
