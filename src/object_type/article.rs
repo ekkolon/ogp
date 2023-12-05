@@ -4,6 +4,7 @@ use std::{ops::Add, str::FromStr};
 
 use crate::{
   builder::{Metadata, MetadataBuilder},
+  convert::ToHTML,
   error::Error,
   object_type::ObjectType,
 };
@@ -35,6 +36,7 @@ pub struct ArticleMetadataBuilder {
   section: Option<String>,
 
   /// Tag words associated with this article.
+  #[serde(rename = "article:tag")]
   tags: Vec<String>,
 
   #[serde(flatten)]
@@ -127,3 +129,5 @@ impl Article for MetadataBuilder {
     }
   }
 }
+
+impl ToHTML for ArticleMetadataBuilder {}
