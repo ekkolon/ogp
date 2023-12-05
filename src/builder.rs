@@ -135,8 +135,13 @@ impl MetadataBuilder {
     self
   }
 
-  pub fn add_video() {}
-  pub fn add_audio() {}
+  pub fn add_video() {
+    todo!()
+  }
+
+  pub fn add_audio() {
+    todo!()
+  }
   // endregion: Required properties
   // ==============================
 
