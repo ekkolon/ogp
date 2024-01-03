@@ -13,7 +13,8 @@ use url::Url;
 /// `GeneralSiteInfo` contains Open Graph metadata shared by all object types.
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct Metadata {
-  /// The canonical URL for your page.
+  /// The canonical URL of your object that will be used as its permanent ID in the graph,
+  /// e.g., "https://www.imdb.com/title/tt0117500/".
   ///
   /// This should be the undecorated URL, without session variables, user
   /// identifying parameters, or counters. Likes and Shares for this URL will
@@ -27,23 +28,29 @@ pub struct Metadata {
   #[serde(rename = "og:title")]
   pub title: Option<String>,
 
-  /// A brief description of the content, usually between 2 and 4 sentences.
+  /// A one to two sentence description of your object.
   #[serde(rename = "og:description")]
   pub description: Option<String>,
 
-  /// A brief description of the content, usually between 2 and 4 sentences.
+  /// If your object is part of a larger web site, the name which should be
+  /// displayed for the overall site. e.g., "IMDb".
   #[serde(rename = "og:site_name")]
   pub site_name: Option<String>,
 
-  /// The title of your article without any branding such as your site name.
+  /// The word that appears before this object's title in a sentence.
+  ///
+  /// An enum of (a, an, the, "", auto). If auto is chosen, the consumer
+  /// of your data should chose between "a" or "an". Default is "" (blank).
   #[serde(rename = "og:determiner")]
   pub determiner: Option<Determiner>,
 
-  /// The title of your article without any branding such as your site name.
+  /// The locale these tags are marked up in. Of the format `language_TERRITORY`.
+  ///
+  /// Default is `en_US`.
   #[serde(rename = "og:locale")]
   pub locale: Option<String>,
 
-  /// The title of your article without any branding such as your site name.
+  /// An array of other locales this page is available in.
   #[serde(rename = "og:locale:alternate")]
   pub locale_alternate: Option<Vec<String>>,
 
@@ -62,6 +69,9 @@ pub struct Metadata {
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct MetadataBuilder {
+  /// The type of your object, e.g., "video.movie".
+  ///
+  /// Depending on the type you specify, other properties may also be required.
   #[serde(rename = "og:type")]
   pub object_type: ObjectType,
 
