@@ -25,7 +25,7 @@ pub struct Image {
   pub secure_url: Option<Url>,
 
   /// A MIME type for this image.
-  // #[serde(rename = "og:image:type")]
+  #[serde(rename = "type")]
   pub mimetype: Option<String>,
 
   /// A description of what is in the image (not a caption).
