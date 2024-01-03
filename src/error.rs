@@ -54,7 +54,7 @@ pub enum Error {
   IO(#[from] std::io::Error),
 
   /// Represents an error for an invalid URL scheme. It must be one of 'http' or 'https'.
-  #[error("{0}")]
+  #[error("Failed to parse URL: {0}")]
   UrlParseError(String),
 
   /// Represents an error for an invalid URL scheme.
