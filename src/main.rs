@@ -1,20 +1,21 @@
 // NOTE: This main entrypoint exists for dev purposes only
 // and will be removed with the first release.
 
-use std::str::FromStr;
-
 use chrono::{DateTime, Utc};
-use ogp::{
-  builder::MetadataBuilder, convert::ToHTML, metadata::Image,
-  object_type::article::Article, Result,
-};
+use std::str::FromStr;
 use url::Url;
+
+use ogp::{
+  convert::ToHTML,
+  metadata::{Image, OgMetadataBuilder},
+  Result,
+};
 
 fn main() -> Result<()> {
   let date: DateTime<Utc> = chrono::offset::Utc::now();
   let published_time = &date.to_string();
 
-  let mut base_builder = MetadataBuilder::default();
+  let mut base_builder = OgMetadataBuilder::default();
 
   base_builder
     .set_title("Open Graph Protocol coming to Rust")
