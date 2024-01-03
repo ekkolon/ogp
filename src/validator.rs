@@ -5,14 +5,14 @@
 //! # Examples
 //!
 //! ```rust
-//! use ogp::validator::{Validator, DimensionsValidator, SecureURLValidator};
+//! use ogp::validator::{Validatable, DimensionsValidator, SecureURLValidator};
 //! use ogp::Result;
 //!
 //! struct MyData {
 //!     // ... fields for your data
 //! }
 //!
-//! impl Validator for MyData {
+//! impl Validatable for MyData {
 //!     fn validate(&self) -> Result<()> {
 //!         // Your validation logic for MyData
 //!         // ...
@@ -42,13 +42,13 @@
 //!
 //! # Traits
 //!
-//! - `Validator`: A trait for general validation.
+//! - `Validatable`: A trait for general validation.
 //! - `DimensionsValidator`: A trait for validating dimensions, including width and height.
 //! - `SecureURLValidator`: A trait for validating secure URLs.
 //!
-//! ## Validator
+//! ## Validatable
 //!
-//! The `Validator` trait provides a `validate` method that returns a `Result<()>` indicating whether the validation succeeded or failed.
+//! The `Validatable` trait provides a `validate` method that returns a `Result<()>` indicating whether the validation succeeded or failed.
 //!
 //! ## DimensionsValidator
 //!
