@@ -10,7 +10,7 @@ use crate::Result;
 pub struct Audio {
   /// The URL of the audio that appears when someone shares the content.
   /// Equivalent to `og:audio` | "og:audio:url".
-  #[serde(rename = "", alias = "og:audio:url")]
+  #[serde(alias = "og:audio:url")]
   pub url: Option<String>,
 
   /// https:// URL for the audio.

@@ -17,7 +17,7 @@ pub struct Image {
   /// This image appears when someone shares the content.
   ///
   /// Represents both the `og:image` | "og:image:url" property.
-  #[serde(rename = "", alias = "og:image:url")]
+  #[serde(alias = "og:image:url")]
   pub url: Option<Url>,
 
   /// An alternate url to use if the webpage requires HTTPS.
