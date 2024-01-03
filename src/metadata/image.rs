@@ -5,7 +5,7 @@ use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 use url::Url;
 
-use crate::error::Error;
+use crate::error::{self, Error};
 use crate::utils::validate_http_url;
 use crate::validator::{DimensionsValidator, Validator};
 use crate::Result;
@@ -42,18 +42,15 @@ pub struct Image {
   pub height: Option<u32>,
 }
 
-#[derive(Debug, PartialEq, Eq)]
-pub struct ParseImageUrlError;
-
 impl FromStr for Image {
-  type Err = ParseImageUrlError;
+  type Err = error::Error;
   fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
     validate_http_url(s)
       .map(|url| Image {
         url: Some(url),
         ..Default::default()
       })
-      .map_err(|err| ParseImageUrlError)
+      .map_err(|err| error::Error::UrlParseError(s.into()))
   }
 }
 
