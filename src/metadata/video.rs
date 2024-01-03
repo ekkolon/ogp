@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 use url::Url;
 
 use crate::utils::validate_http_url;
+use crate::validator::{DimensionsValidator, Validatable};
 use crate::{error, Result};
 
 /// `Image` contains Open Graph metadata for the `video` metatag(s).
@@ -47,7 +48,7 @@ impl FromStr for Video {
   }
 }
 
-impl Validator for Video {
+impl Validatable for Video {
   fn validate(&self) -> Result<()> {
     self.validate_dimensions().unwrap();
 

@@ -7,7 +7,7 @@ use url::Url;
 
 use crate::error::{self, Error};
 use crate::utils::validate_http_url;
-use crate::validator::{DimensionsValidator, Validator};
+use crate::validator::{DimensionsValidator, Validatable};
 use crate::Result;
 
 /// `Image` contains Open Graph metadata for the `image` metatag(s).
@@ -54,7 +54,7 @@ impl FromStr for Image {
   }
 }
 
-impl Validator for Image {
+impl Validatable for Image {
   fn validate(&self) -> Result<()> {
     self.validate_dimensions()
   }

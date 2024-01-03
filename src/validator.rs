@@ -94,7 +94,7 @@
 use crate::{error::Error, Result};
 
 /// A trait for general validation.
-pub trait Validator {
+pub trait Validatable {
   /// Validates the data and returns a `Result<()>` indicating success or failure.
   fn validate(&self) -> Result<()>;
 }
