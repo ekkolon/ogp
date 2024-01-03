@@ -1,19 +1,20 @@
 //! Metadata utility for the Open Graph `music` meta tag.
 
-use crate::{builder::MetadataBuilder, object_type::ObjectType, Result};
+use crate::metadata::{OgMetadata, OgMetadataBuilder};
+use crate::{object_type::ObjectType, Result};
 use serde::{Deserialize, Serialize};
 
 // TODO: Add missing props
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct VideoMovie {
   #[serde(flatten)]
-  metadata: MetadataBuilder,
+  metadata: OgMetadataBuilder,
 }
 
 impl VideoMovie {
   pub fn new() -> Self {
     VideoMovie {
-      metadata: MetadataBuilder::with_type(ObjectType::VideoMovie),
+      metadata: OgMetadataBuilder::with_type(ObjectType::VideoMovie),
     }
   }
 }
@@ -22,13 +23,13 @@ impl VideoMovie {
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct VideoEpisode {
   #[serde(flatten)]
-  metadata: MetadataBuilder,
+  metadata: OgMetadataBuilder,
 }
 
 impl VideoEpisode {
   pub fn new() -> Self {
     VideoEpisode {
-      metadata: MetadataBuilder::with_type(ObjectType::VideoEpisode),
+      metadata: OgMetadataBuilder::with_type(ObjectType::VideoEpisode),
     }
   }
 }
@@ -37,13 +38,13 @@ impl VideoEpisode {
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct VideoTvShow {
   #[serde(flatten)]
-  metadata: MetadataBuilder,
+  metadata: OgMetadataBuilder,
 }
 
 impl VideoTvShow {
   pub fn new() -> Self {
     VideoTvShow {
-      metadata: MetadataBuilder::with_type(ObjectType::VideoTvShow),
+      metadata: OgMetadataBuilder::with_type(ObjectType::VideoTvShow),
     }
   }
 }
@@ -52,14 +53,14 @@ impl VideoTvShow {
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct VideoOther {
   #[serde(flatten)]
-  metadata: MetadataBuilder,
+  metadata: OgMetadataBuilder,
 }
 
 // TODO: Add missing props
 impl VideoOther {
   pub fn new() -> Self {
     VideoOther {
-      metadata: MetadataBuilder::with_type(ObjectType::VideoOther),
+      metadata: OgMetadataBuilder::with_type(ObjectType::VideoOther),
     }
   }
 }

@@ -2,19 +2,15 @@
 
 use std::{ops::Add, str::FromStr};
 
-use crate::{
-  builder::{Metadata, MetadataBuilder},
-  convert::ToHTML,
-  error::Error,
-  object_type::ObjectType,
-};
+use crate::metadata::{OgMetadata, OgMetadataBuilder};
+use crate::{convert::ToHTML, error::Error, object_type::ObjectType};
 
 use chrono::serde::ts_seconds_option;
 use chrono::{DateTime, Local, Utc};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
-pub struct ArticleMetadataBuilder {
+pub struct ArticleMetadata {
   /// When the article was first published.
   #[serde(rename = "article:published_time", with = "ts_seconds_option")]
   published_time: Option<DateTime<Utc>>,
@@ -40,10 +36,10 @@ pub struct ArticleMetadataBuilder {
   tags: Vec<String>,
 
   #[serde(flatten)]
-  metadata: MetadataBuilder,
+  root: OgMetadata,
 }
 
-impl ArticleMetadataBuilder {
+impl ArticleMetadata {
   pub fn set_published_time(
     &mut self,
     published_time: impl Into<String>,
@@ -115,19 +111,21 @@ impl ArticleMetadataBuilder {
 }
 
 pub trait Article {
-  fn article(&self) -> ArticleMetadataBuilder;
+  fn article(&self) -> ArticleMetadata;
 }
 
-impl Article for MetadataBuilder {
-  fn article(&self) -> ArticleMetadataBuilder {
-    ArticleMetadataBuilder {
-      metadata: MetadataBuilder {
-        object_type: ObjectType::Article,
-        metadata: self.get().clone(),
-      },
+impl OgMetadataBuilder {
+  pub fn article(&self) -> ArticleMetadata {
+    let root = OgMetadata {
+      object_type: ObjectType::Article,
+      ..self.get_metadata()
+    };
+
+    ArticleMetadata {
+      root,
       ..Default::default()
     }
   }
 }
 
-impl ToHTML for ArticleMetadataBuilder {}
+impl ToHTML for ArticleMetadata {}

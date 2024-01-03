@@ -1,6 +1,5 @@
 #![allow(dead_code, unused)]
 
-pub mod builder;
 pub mod convert;
 pub mod error;
 pub mod metadata;

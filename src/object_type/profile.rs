@@ -1,8 +1,7 @@
 //! Metadata utility for the Open Graph `profile` meta tag.
 
-use crate::{
-  builder::MetadataBuilder, convert::ToHTML, object_type::ObjectType, Result,
-};
+use crate::metadata::{OgMetadata, OgMetadataBuilder};
+use crate::{convert::ToHTML, object_type::ObjectType, Result};
 use serde::{de::IntoDeserializer, Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -15,7 +14,7 @@ pub enum Gender {
 }
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
-pub struct ProfileMetadataBuilder {
+pub struct ProfileMetadata {
   /// A name normally given to an individual by a parent or self-chosen.
   #[serde(rename = "profile:first_name")]
   pub first_name: Option<String>,
@@ -34,25 +33,23 @@ pub struct ProfileMetadataBuilder {
   pub gender: Option<Gender>,
 
   #[serde(flatten)]
-  metadata: MetadataBuilder,
+  root: OgMetadata,
 }
 
-impl ProfileMetadataBuilder {}
+impl ProfileMetadata {}
 
-pub trait Profile {
-  fn profile(&self) -> ProfileMetadataBuilder;
-}
+impl OgMetadataBuilder {
+  fn profile(&self) -> ProfileMetadata {
+    let root = OgMetadata {
+      object_type: ObjectType::Profile,
+      ..self.get_metadata()
+    };
 
-impl Profile for MetadataBuilder {
-  fn profile(&self) -> ProfileMetadataBuilder {
-    ProfileMetadataBuilder {
-      metadata: MetadataBuilder {
-        object_type: ObjectType::Profile,
-        metadata: self.get().clone(),
-      },
+    ProfileMetadata {
+      root,
       ..Default::default()
     }
   }
 }
 
-impl ToHTML for ProfileMetadataBuilder {}
+impl ToHTML for ProfileMetadata {}

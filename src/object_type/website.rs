@@ -1,31 +1,29 @@
 // TODO: Add docs
 
-use crate::{
-  builder::MetadataBuilder, convert::ToHTML, object_type::ObjectType, Result,
-};
+use crate::metadata::{OgMetadata, OgMetadataBuilder};
+use crate::{convert::ToHTML, object_type::ObjectType, Result};
+
 use serde::{de::IntoDeserializer, Deserialize, Serialize};
 use serde_json::json;
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
-pub struct WebsiteMetadataBuilder {
+pub struct WebsiteMetadata {
   #[serde(flatten)]
-  metadata: MetadataBuilder,
+  root: OgMetadata,
 }
 
 pub trait Website {
-  fn website(&self) -> WebsiteMetadataBuilder;
+  fn website(&self) -> WebsiteMetadata;
 }
 
-impl Website for MetadataBuilder {
-  fn website(&self) -> WebsiteMetadataBuilder {
-    WebsiteMetadataBuilder {
-      metadata: MetadataBuilder {
-        object_type: ObjectType::Website,
-        metadata: self.get().clone(),
-      },
-      ..Default::default()
-    }
+impl Website for OgMetadataBuilder {
+  fn website(&self) -> WebsiteMetadata {
+    let root = OgMetadata {
+      object_type: ObjectType::Website,
+      ..self.get_metadata()
+    };
+    WebsiteMetadata { root }
   }
 }
 
-impl ToHTML for WebsiteMetadataBuilder {}
+impl ToHTML for WebsiteMetadata {}

@@ -1,6 +1,7 @@
 //! Metadata utility for the Open Graph `book` meta tag.
 
-use crate::{builder::MetadataBuilder, object_type::ObjectType, Result};
+use crate::metadata::{OgMetadata, OgMetadataBuilder};
+use crate::{object_type::ObjectType, Result};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Default, Debug, Clone)]
@@ -22,13 +23,13 @@ pub struct Book {
   pub tag: Option<String>,
 
   #[serde(flatten)]
-  metadata: MetadataBuilder,
+  metadata: OgMetadataBuilder,
 }
 
 impl Book {
   pub fn new() -> Self {
     Book {
-      metadata: MetadataBuilder::with_type(ObjectType::Book),
+      metadata: OgMetadataBuilder::with_type(ObjectType::Book),
       ..Default::default()
     }
   }
